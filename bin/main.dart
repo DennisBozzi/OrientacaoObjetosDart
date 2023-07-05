@@ -4,26 +4,28 @@ void main() {
   String corFruta = 'Verde e Amarelo';
   String sabor = 'Doce e cítrica';
   int diasDeColheita = 30;
-  bool isMadura = funcIsMadura(diasDeColheita);
+  bool isMadura;
 
-  print('A fruta está madura? $isMadura');
+  Fruta fruta01 = Fruta('Laranja', 100.2, 'Verde e Amarelo', 'Doce e cítrica', 30);
+  Fruta fruta02 = Fruta('Uva', 80.3, 'Roxo', 'Doce', 15);
 
-  funcShowMadura(nome, diasDeColheita, cor: corFruta, peso: peso);
+  //print('A primeira fruta é a ${fruta01.nome} e a segunda fruta é a ${fruta02.nome}');
 
-  funcQuantosDiasMadura(diasDeColheita);
-
-  funcRecursiva(0, 4);
+  fruta01.estaMadura(50);
+  fruta02.estaMadura(20);
 }
 
-//Usada como loop
-funcRecursiva(int contador, int limite) {
-  print('$contador');
+// 1 - Posicionais Obrigatórios - Posicionamento dos parametros na ordem correta (String nome, int dias)
+// 2 - Nomeados Opcionais - Passa um parametro nomeado que não é obrigatório {String? cor}
+// 3 - Parâmetros "Padrão" - Passa um valor default, para um parametro {String cor = "Sem cor"}
+// 4 - Modificador "Required" - Ele é um parametro nomeado que é obrigatório {required double peso}
 
-  if (contador >= limite) {
-    return;
+bool funcIsMadura(int dias) {
+  if (dias >= 30) {
+    return true;
+  } else {
+    return false;
   }
-
-  funcRecursiva(contador + 1, limite);
 }
 
 funcQuantosDiasMadura(int dias) {
@@ -37,13 +39,7 @@ funcQuantosDiasMadura(int dias) {
   }
 }
 
-// 1 - Posicionais Obrigatórios - Posicionamento dos parametros na ordem correta (String nome, int dias)
-// 2 - Nomeados Opcionais - Passa um parametro nomeado que não é obrigatório {String? cor}
-// 3 - Parâmetros "Padrão" - Passa um valor default, para um parametro {String cor = "Sem cor"}
-// 4 - Modificador "Required" - Ele é um parametro nomeado que é obrigatório {required double peso}
-
-void funcShowMadura(String nome, int dias,
-    {String? cor, required double peso}) {
+void funcShowMadura(String nome, int dias, {String? cor, required double peso}) {
   if (dias >= 30) {
     print('A $nome está madura');
   } else {
@@ -57,10 +53,29 @@ void funcShowMadura(String nome, int dias,
   print('O peso da $nome é $peso');
 }
 
-bool funcIsMadura(int dias) {
-  if (dias >= 30) {
-    return true;
-  } else {
-    return false;
+//Usada como loop
+funcRecursiva(int contador, int limite) {
+  print('$contador');
+
+  if (contador >= limite) {
+    return;
+  }
+
+  funcRecursiva(contador + 1, limite);
+}
+
+class Fruta {
+  String nome;
+  double peso;
+  String corFruta;
+  String sabor;
+  int diasDeColheita;
+  bool? isMadura;
+
+  Fruta(this.nome, this.peso, this.corFruta, this.sabor, this.diasDeColheita, {this.isMadura});
+
+  void estaMadura(int diasParaMadura) {
+    isMadura = diasDeColheita >= diasParaMadura;
+    print('A sua $nome foi colhida a $diasDeColheita dias, e precisa de $diasParaMadura dias para amadurecer. Ela está madura? $isMadura');
   }
 }
