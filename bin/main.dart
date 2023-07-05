@@ -14,6 +14,15 @@ void main() {
 
   citrica01.citrica();
   nozes01.qtdOleoNatural();
+
+  fruta01.separarIngredientes();
+
+  fruta01.fazerMassa();
+
+  nozes01.fazerMassa();
+
+  /* A classe abstrata Bolo está sendo implementada em Fruta
+  O método fazerMassa está sento sobEscrito em Nozes, onde a Noz é descascada*/
 }
 
 class Alimento {
@@ -28,7 +37,7 @@ class Alimento {
   }
 }
 
-class Fruta extends Alimento {
+class Fruta extends Alimento implements Bolo {
   String sabor;
   int diasDeColheita;
   bool? isMadura;
@@ -43,9 +52,24 @@ class Fruta extends Alimento {
   void fazerSuco() {
     print('Você acabou de fazer um suco de $nome');
   }
+
+  @override
+  void separarIngredientes() {
+    print('Catar a $nome');
+  }
+
+  @override
+  void fazerMassa() {
+    print('Misturar a $nome com Farinha, açucar, ovos...');
+  }
+
+  @override
+  void assar() {
+    print('Colocar o bolo de $nome no forno');
+  }
 }
 
-class Legumes extends Alimento {
+class Legumes extends Alimento implements Bolo {
   bool isPrecisaCozinhar;
 
   Legumes(nome, peso, cor, this.isPrecisaCozinhar) : super(nome, peso, cor);
@@ -56,6 +80,21 @@ class Legumes extends Alimento {
     } else {
       print('Nem precisa cozinhar');
     }
+  }
+
+  @override
+  void separarIngredientes() {
+    // TODO: implement separarIngredientes
+  }
+
+  @override
+  void fazerMassa() {
+    // TODO: implement fazerMassa
+  }
+
+  @override
+  void assar() {
+    // TODO: implement assar
   }
 }
 
@@ -81,6 +120,21 @@ class Nozes extends Fruta {
   void qtdOleoNatural() {
     print('O(a) $nome possui ${porcentagemDeOleoNatural * 100} por cento de óleo natural');
   }
+
+  @override
+  void fazerMassa() {
+    print('Tirar a casca de $nome');
+    super.fazerMassa();
+  }
+}
+
+//Classe Abstrata
+abstract class Bolo {
+  void separarIngredientes();
+
+  void fazerMassa();
+
+  void assar();
 }
 
 /*
